@@ -39,7 +39,17 @@ class HomeController extends Controller
     }
     function welcome()
     {
-        return view('welcome');
+        $buingPrice = customerBill::all('buingPrice');
+        $sellingPrice = customerBill::all('sellingPrice');
+        $totalbuy = 0;
+        $totalsell = 0;
+        foreach ($buingPrice as $key => $value) {
+            $totalbuy += $value->buingPrice;
+        }
+        foreach ($sellingPrice as $key => $value) {
+            $totalsell += $value->sellingPrice;
+        }
+        return view('welcome',compact('totalbuy', 'totalsell'));
     }
     function category()
     {
@@ -446,16 +456,37 @@ class HomeController extends Controller
             //     'quantity' => $stockNow-$value->quantity,
             // ]);
             $thisSaleId = $value->saleid;
-            allBill::insert([
-                'saleid' => $thisSaleId,
-                'customerid' => $customerId,
-            ]);
             billQ::findOrFail($value->id)->delete();
         }
+                    allBill::insert([
+                        'saleid' => $thisSaleId,
+                        'customerid' => $customerId,
+                    ]);
 
 
             // echo Auth::user()->id;
 
         return back()->with('greenStatus', 'New Customer Saved 👍');
+        }
+
+        function allBill()
+        {
+            $allBill = customerBill::all();
+            return view('allBill',compact('allBill'));
+        }
+
+        function showEachBill()
+        {
+            $showEachBill = allBill::all();
+            return view('showEachBill',compact('showEachBill'));
+
+        }
+        function showEachBillshow($id)
+        {
+            $showEachBill = allBill::all();
+            $showEachBillshow = customerBill::where('saleid',$id)->get();
+            return view('showEachBillshow',compact('showEachBill','showEachBillshow'));
+            // print_r($showEachBillshow);
+
         }
     }

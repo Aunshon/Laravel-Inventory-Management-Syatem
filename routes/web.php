@@ -53,3 +53,9 @@ Route::get('/saleProduct', 'HomeController@saleProduct')->name('saleProduct');
 
 Route::get('/queue', 'HomeController@queue')->name('queue');
 Route::post('/saveNewCustomer', 'HomeController@saveNewCustomer')->name('saveNewCustomer');
+
+
+Route::get('/allBill', 'HomeController@allBill')->name('allBill');
+Route::get('/showEachBill', 'HomeController@showEachBill')->name('showEachBill');
+// Route::get('/showEachBill/{saleid}', 'HomeController@showEachBillshow');
+Route::get('/{saleid}', 'HomeController@showEachBillshow');
