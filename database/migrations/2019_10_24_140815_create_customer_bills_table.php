@@ -27,6 +27,8 @@ class CreateCustomerBillsTable extends Migration
             $table->integer('due');
             $table->string('dis');
             $table->integer('payMethod');
+            $table->integer('customerid');
+            $table->integer('sallerid');
             $table->timestamp('dueDate');
             $table->timestamps();
         });

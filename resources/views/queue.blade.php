@@ -106,16 +106,16 @@
       <form action="{{ __('saveNewCustomer') }}" method="POST">
         @csrf
         <div class="form-group">
-            <label >Stock Name</label>
+            <label >Customer Name</label>
             <input value="{{old('customerName')}}" name="customerName" type="text" class="form-control"  placeholder="Enter customer name">
         </div>
         <div class="form-group">
-            <label >Stock Name</label>
-            <input value="{{old('customerPhone')}}" name="customerPhone" type="text" class="form-control"  placeholder="Enter customer Phone">
+            <label >Customer Phone</label>
+            <input value="{{old('customerPhone')}}" name="phone" type="text" class="form-control"  placeholder="Enter customer Phone">
         </div>
         <div class="form-group">
-            <label >Stock Name</label>
-            <input value="{{old('customerAddress')}}" name="customerAddress" type="text" class="form-control"  placeholder="Enter customer Address">
+            <label >Customer Address</label>
+            <input value="{{old('customerAddress')}}" name="address" type="text" class="form-control"  placeholder="Enter customer Address">
         </div>
         <button type="submit" class="btn btn-primary col-12 text-center">Check Out</button>
     </form>

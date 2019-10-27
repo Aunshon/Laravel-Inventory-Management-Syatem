@@ -124,6 +124,7 @@
     {{-- <script src="{{ asset('assets/js/addCategory.js') }}"></script> --}}
         <script>
         $(document).ready(function () {
+            var globalQuan = 0;
             $('#categoryid').change(function () {
                 var categoryid=$(this).val();
 
@@ -193,6 +194,7 @@
                     success: function (data) {
                         // alert(data);
                         $('#available').val(data);
+                        globalQuan = data;
                         LoadPrice();
                     }
                 });
@@ -232,9 +234,11 @@
                 if (parseInt(quantity) > parseInt(available)) {
                     // alert();
                     $('#quantity').css("background-color", "red");
+                    $('#available').val(globalQuan);
                 }
                 else{
                     $('#quantity').css("background-color", "white");
+                    $('#available').val(globalQuan-quantity);
                 }
             }
         });

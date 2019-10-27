@@ -52,3 +52,4 @@ Route::post('/saveSellQueue', 'HomeController@saveSellQueue')->name('saveSellQue
 Route::get('/saleProduct', 'HomeController@saleProduct')->name('saleProduct');
 
 Route::get('/queue', 'HomeController@queue')->name('queue');
+Route::post('/saveNewCustomer', 'HomeController@saveNewCustomer')->name('saveNewCustomer');

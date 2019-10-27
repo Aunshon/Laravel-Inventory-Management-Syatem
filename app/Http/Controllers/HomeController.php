@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\allBill;
 use App\billQ;
 use App\Category;
 use App\customerBill;
+use App\customerInfo;
 use App\Product;
 use App\stock;
 use App\supplier;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Auth;
 
 
 class HomeController extends Controller
@@ -246,12 +249,12 @@ class HomeController extends Controller
                                 'stockName' => $request->stockName,
                                 'quantity' => $request->quantity,
                                 'supplierid' => $request->supplierid,
-            'categoryid' => $request->categoryid,
-            'buingPrice' => $request->buingPrice,
-            'sellingPrice' => $request->sellingPrice,
-            'expireDate' => $request->expireDate,
-            ]);
-            return redirect(__('stockManager'))->with('greenStatus', 'Stock Edited 😁');
+                                'categoryid' => $request->categoryid,
+                                'buingPrice' => $request->buingPrice,
+                                'sellingPrice' => $request->sellingPrice,
+                                'expireDate' => $request->expireDate,
+                                ]);
+                     return redirect(__('stockManager'))->with('greenStatus', 'Stock Edited 😁');
         }
         function deleteStock($id)
         {
@@ -398,5 +401,61 @@ class HomeController extends Controller
         {
             $allqueue = billQ::all();
             return view('queue',compact('allqueue'));
+        }
+        function saveNewCustomer(Request $request)
+        {
+        $request->validate([
+            'customerName' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+        ]);
+        $customerId = customerInfo::insertGetId([
+            'customerName' => $request->customerName,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'created_at' => Carbon::now(),
+        ]);
+
+
+        $allqueue = billQ::all();
+        $thisSaleId = '';
+        foreach ($allqueue as $value) {
+            $stockNow = stock::findOrFail($value->stockid)->quantity;
+            $billId = customerBill::insertGetId([
+                'stockid' => $value->stockid,
+                'saleid' => $value->saleid,
+                'categoryid' => $value->categoryid,
+                'buingPrice' => $value->buingPrice,
+                'sellingPrice' => $value->sellingPrice,
+                'quantity' => $value->quantity,
+                'available' => $value->available,
+                'totalBill' => $value->totalBill,
+                'pay' => $value->pay,
+                'due' => $value->due,
+                'dis' => $value->dis,
+                'payMethod' => $value->payMethod,
+                'dueDate' => $value->dueDate,
+                'customerid' => $customerId,
+                'sallerid' => Auth::user()->id,
+            ]);
+            stock::findOrFail($value->stockid)->update([
+                'quantity' => $stockNow-$value->quantity,
+                'updated_at' => Carbon::now(),
+            ]);
+            // customerBill::findOrFail($billId)->update([
+            //     'quantity' => $stockNow-$value->quantity,
+            // ]);
+            $thisSaleId = $value->saleid;
+            allBill::insert([
+                'saleid' => $thisSaleId,
+                'customerid' => $customerId,
+            ]);
+            billQ::findOrFail($value->id)->delete();
+        }
+
+
+            // echo Auth::user()->id;
+
+        return back()->with('greenStatus', 'New Customer Saved 👍');
         }
     }

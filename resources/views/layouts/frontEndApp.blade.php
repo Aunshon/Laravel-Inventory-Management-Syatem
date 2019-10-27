@@ -209,18 +209,9 @@
                             </li>
 
                             <li>
-                                <a href="javascript: void(0);"><i class="fi-bar-graph-2"></i><span> Graphs </span> <span class="menu-arrow"></span></a>
+                                <a href="javascript: void(0);"><i class="fi-bar-graph-2"></i><span> Report </span> <span class="menu-arrow"></span></a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li><a href="chart-flot.html">Flot Chart</a></li>
-                                    <li><a href="chart-morris.html">Morris Chart</a></li>
-                                    <li><a href="chart-google.html">Google Chart</a></li>
-                                    <li><a href="chart-echart.html">Echarts</a></li>
-                                    <li><a href="chart-chartist.html">Chartist Charts</a></li>
-                                    <li><a href="chart-chartjs.html">Chartjs Chart</a></li>
-                                    <li><a href="chart-c3.html">C3 Chart</a></li>
-                                    <li><a href="chart-justgage.html">Justgage Charts</a></li>
-                                    <li><a href="chart-sparkline.html">Sparkline Chart</a></li>
-                                    <li><a href="chart-knob.html">Jquery Knob</a></li>
+                                    <li><a href="chart-flot.html">All Bills</a></li>
                                 </ul>
                             </li>
 
